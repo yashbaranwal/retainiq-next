@@ -3,7 +3,7 @@ https://retainiq-next-yashbaranwals-projects.vercel.app
 
 ## Getting Started
 
-First, install all the dependencies using:
+First clone the repo using "git clone https://github.com/yashbaranwal/retainiq-next.git" & install all the dependencies using:
 ```bash
 npm install
 ```
