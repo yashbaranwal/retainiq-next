@@ -20,15 +20,13 @@ import {
   addDynamicVariant,
   removeDynamicVariant,
 } from "@/redux/slices/collection-slice";
+import useDeviceType from "@/hooks/useDeviceType";
 
-const InsertDesignModal = dynamic(() => import("./_components/insert-design")
-// , {
-//   ssr: false,
-// }
-);
+const InsertDesignModal = dynamic(() => import("./_components/insert-design"));
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { isMobile } = useDeviceType();
 
   const [isOpenModal, setIsModalOpen] = useState<boolean>(false);
   const products = useSelector(selectProducts);
@@ -115,7 +113,7 @@ const Home = () => {
             <td>
               <Trash2
                 size={24}
-                className="text-danger invisible group-hover:visible cursor-pointer"
+                className="text-danger invisible group-hover:visible cursor-pointer ml-2"
                 onClick={() => handleRemoveProduct(product.id)}
               />
               <div className="flex items-center gap-1">
@@ -211,11 +209,11 @@ const Home = () => {
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-2">
         <div className="flex-center justify-between">
           <div className="flex-center justify-between gap-3">
-            <ArrowLeft size={30} className="text-black" />
-            <p className="font-serif text-2xl border-b border-b-darkGray">
+            <ArrowLeft size={isMobile ? 20 : 30} className="text-black" />
+            <p className="font-serif text-sm md:text-2xl border-b border-b-darkGray">
               Rules creation
             </p>
           </div>
@@ -234,7 +232,7 @@ const Home = () => {
                   <thead>
                     <tr className="h-20">
                       <th className="text-left p-2" />
-                      <th className="text-left p-2 w-6/12">Product Filter</th>
+                      <th className="text-center p-2 w-6/12">Product Filter</th>
                       <th className="text-left p-2">Primary Variant</th>
                       {colVariants.map((variant, idx) => (
                         <th className="text-left p-2 group" key={idx}>

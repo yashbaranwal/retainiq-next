@@ -1,9 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { HomeIcon, Image, Menu, ShoppingBag, UsersIcon } from "lucide-react";
+import { HomeIcon, Image, ShoppingBag, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { cn } from "@/lib/utils";
 
 export const routes = [
   {
@@ -28,23 +29,14 @@ export const routes = [
   },
 ];
 
-const Sidebar = ({ toggle, setToggle }) => {
+const Sidebar = () => {
   const pathName = usePathname();
 
   return (
     <div
-      className={`${
-        toggle ? "w-[5%] px-0" : "w-[20%] px-3"
-      } sticky top-0 h-screen flex flex-col space-y-2 py-2 bg-darkGray transition-all duration-300`}
+      className={`w-20 fixed inset-y-0 flex flex-col space-y-2 py-2 bg-darkGray transition-all duration-300`}
     >
-      <div className={`flex p-4 ${toggle ? "justify-center" : "justify-end"}`}>
-        <Menu
-          onClick={() => setToggle(!toggle)}
-          className="cursor-pointer text-white"
-        />
-      </div>
-
-      <div className="space-y-1 px-4">
+      <div className="space-y-1 px-4 pt-4">
         {routes.map((route, idx) => (
           <Link
             href={route.href}
@@ -58,7 +50,6 @@ const Sidebar = ({ toggle, setToggle }) => {
           >
             <div className="flex items-center space-x-3">
               <route.icon className="w-5 h-5" />
-              {!toggle && <p>{route.label}</p>}
             </div>
           </Link>
         ))}

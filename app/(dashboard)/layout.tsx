@@ -1,21 +1,25 @@
 "use client";
 
+import MobileSheet from "@/components/mobile-sheet";
 import Sidebar from "@/components/sidebar";
-import { useState } from "react";
+import useDeviceType from "@/hooks/useDeviceType";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
 };
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const [toggle, setToggle] = useState(true);
+  const { isMobile } = useDeviceType();
 
   return (
     <div className="flex items-start">
-      <Sidebar toggle={toggle} setToggle={setToggle} />
+      {!isMobile && <Sidebar />}
 
-      <main className={`${toggle ? "w-[95%]" : "w-[80%]"}`}>
-        <div className="p-6 bg-white">{children}</div>
+      <main className={`w-full ${!isMobile && "pl-20"}`}>
+        <div className="p-6 bg-white">
+          {isMobile && <MobileSheet />}
+          {children}
+        </div>
       </main>
     </div>
   );

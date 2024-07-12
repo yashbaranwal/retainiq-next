@@ -31,13 +31,13 @@ const collectionSlice = createSlice({
   reducers: {
     addProduct: (state, action) => {
       state.products.push(action.payload);
-      toast.success("State added")
+      toast.success("State added");
     },
     removeProduct: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload,
       );
-      toast.success("State removed!")
+      toast.success("State removed!");
     },
     addColVariant: (state, action) => {
       state.colVariants.push(action.payload);
@@ -56,7 +56,7 @@ const collectionSlice = createSlice({
           name,
         });
       });
-      toast.success("Variant added")
+      toast.success("Variant added");
     },
     removeDynamicVariant: (state, action) => {
       state.products.forEach((product) => {
@@ -64,7 +64,7 @@ const collectionSlice = createSlice({
           (variant) => variant.name !== action.payload,
         );
       });
-      toast.success("Variant removed!")
+      toast.success("Variant removed!");
     },
     reorderProducts: (state, action) => {
       state.products = action.payload;
@@ -90,7 +90,7 @@ const collectionSlice = createSlice({
         if (variantIndex !== -1) {
           state.products[productIndex].variants[variantIndex].image = img;
         }
-        toast.success("Variant template updated")
+        toast.success("Variant template updated");
       }
     },
   },

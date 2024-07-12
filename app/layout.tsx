@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/redux/providers";
 import Metrics from "./metrics";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "RetainIQ",
