@@ -42,7 +42,7 @@ const Home = () => {
     const variants = colVariants.map((item, idx) => ({
       id: uuidv4(),
       image: null,
-      name: `Variant ${colVariants.length + idx}`,
+      name: `Variant ${2 + idx}`,
     }));
 
     dispatch(
@@ -70,7 +70,7 @@ const Home = () => {
   };
 
   const handleRemoveColVariant = (id: string, name: string): void => {
-    dispatch(removeColVariant(id));
+    dispatch(removeColVariant(name));
     dispatch(removeDynamicVariant(name));
   };
 

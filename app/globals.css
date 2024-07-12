@@ -86,7 +86,7 @@ body,
   }
 
   .sticky-col {
-    @apply sticky bg-lightestGray left-[0px];
+    @apply sticky bg-lightestGray left-[0px] z-50;
   }
 
   th:first-child {

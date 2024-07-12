@@ -10,7 +10,7 @@ const initialState = {
       primaryVariant: null,
       variants: [
         {
-          id: uuidv4(),
+          id: "v2",
           image: null,
           name: "Variant 2",
         },
@@ -19,7 +19,7 @@ const initialState = {
   ],
   colVariants: [
     {
-      id: uuidv4(),
+      id: "v2",
       name: "Variant 2",
     },
   ],
@@ -44,7 +44,7 @@ const collectionSlice = createSlice({
     },
     removeColVariant: (state, action) => {
       state.colVariants = state.colVariants.filter(
-        (column) => column.id !== action.payload,
+        (column) => column.name !== action.payload,
       );
     },
     addDynamicVariant: (state, action) => {
