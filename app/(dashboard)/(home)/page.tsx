@@ -1,5 +1,13 @@
 "use client";
 
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { ArrowLeft, Grip, Plus, SquarePen, Trash2 } from "lucide-react";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+
 import { Button } from "@/components/ui/button";
 import {
   addProduct,
@@ -9,18 +17,15 @@ import {
   addColVariant,
   removeColVariant,
   reorderProducts,
+  addDynamicVariant,
+  removeDynamicVariant,
 } from "@/redux/slices/collection-slice";
-import { ArrowLeft, Grip, Plus, SquarePen, Trash2 } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import dynamic from "next/dynamic";
-import Image from "next/image";
 
-const InsertDesignModal = dynamic(() => import("./_components/insert-design"), {
-  ssr: false,
-});
+const InsertDesignModal = dynamic(() => import("./_components/insert-design")
+// , {
+//   ssr: false,
+// }
+);
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -30,13 +35,26 @@ const Home = () => {
   const colVariants = useSelector(selectColVariants);
 
   const [variantType, setvariantType] = useState<string>("");
-  const [selectedProductId, setSelectedProductId] = useState<number>();
+  const [productId, setSelectedProductId] = useState<number>();
 
   // dynamic variant id
   const [variantId, setVariantId] = useState<string>();
 
   const handleAddProduct = (): void => {
-    dispatch(addProduct({ id: products.length + 1 }));
+    const variants = colVariants.map((item, idx) => ({
+      id: uuidv4(),
+      image: null,
+      name: `Variant ${colVariants.length + idx}`,
+    }));
+
+    dispatch(
+      addProduct({
+        id: products.length + 1,
+        filters: [],
+        primaryVariant: null,
+        variants: variants,
+      }),
+    );
   };
 
   const handleRemoveProduct = (id: number): void => {
@@ -44,17 +62,18 @@ const Home = () => {
   };
 
   const handleAddColVariant = (): void => {
-    dispatch(
-      addColVariant({
-        id: uuidv4(),
-        image: null,
-        name: `Variant ${colVariants.length + 2}`,
-      })
-    );
+    const obj = {
+      id: uuidv4(),
+      image: null,
+      name: `Variant ${colVariants.length + 2}`,
+    };
+    dispatch(addColVariant(obj));
+    dispatch(addDynamicVariant(obj));
   };
 
-  const handleRemoveColVariant = (id: string): void => {
+  const handleRemoveColVariant = (id: string, name: string): void => {
     dispatch(removeColVariant(id));
+    dispatch(removeDynamicVariant(name));
   };
 
   const handlePrimaryVariant = (id) => {
@@ -88,12 +107,12 @@ const Home = () => {
       >
         {(provided) => (
           <tr
-            className="group divide-x-[1px] divide-lightGray"
+            className="group divide-x divide-lightGray"
             {...provided.draggableProps}
             ref={provided.innerRef}
             {...provided.dragHandleProps}
           >
-            <td className="px-4">
+            <td>
               <Trash2
                 size={24}
                 className="text-danger invisible group-hover:visible cursor-pointer"
@@ -104,14 +123,14 @@ const Home = () => {
                 <Grip size={24} className="text-darkGray" />
               </div>
             </td>
-            <td className="px-4">
-              <div className="bg-white h-[22vh] px-8 flex items-center justify-center shadow-sm rounded-md">
+            <td>
+              <div className="bg-white h-[22vh] px-8 flex-center shadow-sm rounded-md">
                 <Button variant="outline">+ Add Product Filters</Button>
               </div>
             </td>
-            <td className="px-4">
+            <td>
               {product.primaryVariant ? (
-                <div className="relative flex items-center justify-center">
+                <div className="relative flex-center">
                   <Image
                     src={product.primaryVariant}
                     className="rounded-md"
@@ -129,7 +148,7 @@ const Home = () => {
                   </Button>
                 </div>
               ) : (
-                <div className="bg-white h-[22vh] px-4 flex items-center justify-center shadow-sm rounded-md">
+                <div className="bg-white h-[22vh] px-4 flex-center shadow-sm rounded-md">
                   <Button
                     variant="outline"
                     onClick={() => handlePrimaryVariant(product.id)}
@@ -140,9 +159,9 @@ const Home = () => {
               )}
             </td>
             {product?.variants?.map((variant, index) => (
-              <td key={index} className="px-4">
+              <td key={index}>
                 {variant.image ? (
-                  <div className="relative flex items-center justify-center">
+                  <div className="relative flex-center">
                     <Image
                       src={variant.image}
                       className="rounded-md"
@@ -162,7 +181,7 @@ const Home = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="bg-white h-[22vh] px-4 flex items-center justify-center shadow-sm rounded-md">
+                  <div className="bg-white h-[22vh] px-4 flex-center shadow-sm rounded-md">
                     <Button
                       variant="outline"
                       onClick={() =>
@@ -175,7 +194,7 @@ const Home = () => {
                 )}
               </td>
             ))}
-            <td className="px-4">
+            <td>
               <Button
                 variant="outline"
                 size="icon"
@@ -193,8 +212,8 @@ const Home = () => {
   return (
     <>
       <div className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-between gap-3">
+        <div className="flex-center justify-between">
+          <div className="flex-center justify-between gap-3">
             <ArrowLeft size={30} className="text-black" />
             <p className="font-serif text-2xl border-b border-b-darkGray">
               Rules creation
@@ -223,7 +242,9 @@ const Home = () => {
                           <Trash2
                             size={24}
                             className="text-danger cursor-pointer hidden group-hover:inline-flex ml-2"
-                            onClick={() => handleRemoveColVariant(variant.id)}
+                            onClick={() =>
+                              handleRemoveColVariant(variant.id, variant.name)
+                            }
                           />
                         </th>
                       ))}
@@ -268,7 +289,7 @@ const Home = () => {
         setIsModalOpen={setIsModalOpen}
         variantType={variantType}
         variantId={variantId}
-        selectedProductId={selectedProductId}
+        productId={productId}
       />
     </>
   );

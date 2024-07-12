@@ -20,6 +20,5 @@ export const myApi = createApi({
   tagTypes: [],
   endpoints: (builder) => ({
     /*** */
-  })
+  }),
 });
-

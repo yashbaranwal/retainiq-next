@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { useDispatch } from "react-redux";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,15 +11,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { IMG_BASE_URL } from "@/general";
-import { updateDynamicVariant, updatePrimaryVariant } from "@/redux/slices/collection-slice";
-import Image from "next/image";
-import { useDispatch } from "react-redux";
+import {
+  updateDynamicVariant,
+  updatePrimaryVariant,
+} from "@/redux/slices/collection-slice";
 
 const InsertDesignModal = ({
   isModalOpen,
   setIsModalOpen,
   variantType,
-  selectedProductId,
+  productId,
   variantId,
 }) => {
   const dispatch = useDispatch();
@@ -41,21 +45,26 @@ const InsertDesignModal = ({
   ];
 
   const handleInsert = (img) => {
-    if (variantType === "primary") {
-      dispatch(
-        updatePrimaryVariant({
-          id: selectedProductId,
-          img: img,
-        })
-      );
-    } else {
-      dispatch(
-        updateDynamicVariant({
-          prodId: selectedProductId,
-          varId: variantId,
-          img: img,
-        })
-      );
+    switch (variantType) {
+      case "primary":
+        dispatch(
+          updatePrimaryVariant({
+            id: productId,
+            img: img,
+          }),
+        );
+        break;
+      case "dynamic":
+        dispatch(
+          updateDynamicVariant({
+            prodId: productId,
+            varId: variantId,
+            img: img,
+          }),
+        );
+        break;
+      default:
+        return null;
     }
     setIsModalOpen(false);
   };

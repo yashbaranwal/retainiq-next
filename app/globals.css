@@ -71,3 +71,18 @@ body,
     --ring: 212.7 26.8% 83.9%;
   }
 }
+
+@layer components{
+
+  .flex-center{
+    @apply flex items-center justify-center
+  }
+
+  th{
+    @apply text-left p-2 font-normal text-gray whitespace-nowrap min-w-32
+  }
+
+  td{
+    @apply px-4
+  }
+}

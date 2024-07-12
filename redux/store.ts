@@ -1,4 +1,3 @@
-
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { myApi } from "./api";
 import authSlice from "./slices/auth-slice";

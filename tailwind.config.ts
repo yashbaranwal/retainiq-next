@@ -27,7 +27,7 @@ const config = {
         primary: "#1cc744", //green
         secondary: "#5898FF", //hover blue
         tertiary: "#2046BB", //more blue
-        danger:"#D44C11",
+        danger: "#D44C11",
         gray: "#747474", //for texts
         lightGray: "#E5E5E5", //for background
         lightestGray: "#FAFAFA",

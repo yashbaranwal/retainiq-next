@@ -1,13 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  HomeIcon,
-  Image,
-  Menu,
-  ShoppingBag,
-  UsersIcon,
-} from "lucide-react";
+import { HomeIcon, Image, Menu, ShoppingBag, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -44,7 +38,10 @@ const Sidebar = ({ toggle, setToggle }) => {
       } sticky top-0 h-screen flex flex-col space-y-2 py-2 bg-darkGray transition-all duration-300`}
     >
       <div className={`flex p-4 ${toggle ? "justify-center" : "justify-end"}`}>
-        <Menu onClick={() => setToggle(!toggle)} className="cursor-pointer text-white" />
+        <Menu
+          onClick={() => setToggle(!toggle)}
+          className="cursor-pointer text-white"
+        />
       </div>
 
       <div className="space-y-1 px-4">
