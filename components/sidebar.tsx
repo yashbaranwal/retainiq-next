@@ -34,7 +34,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`w-20 fixed inset-y-0 flex flex-col space-y-2 py-2 bg-darkGray transition-all duration-300`}
+      className={`w-20 hidden fixed inset-y-0 md:flex flex-col space-y-2 py-2 bg-darkGray transition-all duration-300`}
     >
       <div className="space-y-1 px-4 pt-4">
         {routes.map((route, idx) => (
