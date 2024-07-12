@@ -8,7 +8,7 @@ const nextConfig = {
         remotePatterns:[
             {
                 protocol: 'https',
-                hostname:"bucket.happythreads4u.in",
+                hostname:"encrypted-tbn0.gstatic.com",
             },
         ]
     },
@@ -31,8 +31,8 @@ export default withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://github.com/getsentry/sentry-webpack-plugin#options
 
-org: "happythreads",
-project: "happy-frontend",
+org: "retainiq",
+project: "retainiq",
 
 // Only print logs for uploading source maps in CI
 silent: !process.env.CI,
