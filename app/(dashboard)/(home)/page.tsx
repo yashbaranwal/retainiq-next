@@ -220,7 +220,7 @@ const Home = () => {
           <Button>Publish Feed</Button>
         </div>
 
-        <div className="mt-8 p-8 bg-lightestGray rounded-xl overflow-x-auto">
+        <div className="mt-8 bg-lightestGray rounded-xl overflow-x-auto scrollbar-hide">
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="products">
               {(provided) => (
@@ -276,7 +276,12 @@ const Home = () => {
           </DragDropContext>
 
           <div className="p-4">
-            <Button variant="outline" size="icon" onClick={handleAddProduct}>
+            <Button
+              className="add-row"
+              variant="outline"
+              size="icon"
+              onClick={handleAddProduct}
+            >
               +
             </Button>
           </div>
